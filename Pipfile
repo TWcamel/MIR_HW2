@@ -1,0 +1,25 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+
+[packages]
+requests = "*"
+numpy = ">=1.13.4"
+scipy = ">=0.16"
+mido = ">=1.2.6"
+Cython = ">=0.25"
+librosa = "*"
+matplotlib = "*"
+llvmlite = "*"
+numba = "==0.48.0"
+PrettyTable = "*"
+mir-eval = "*"
+tqdm = "*"
+madmom = "*"
+
+[requires]
+python_version = "3.6"
