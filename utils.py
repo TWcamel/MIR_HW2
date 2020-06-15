@@ -1,5 +1,4 @@
 from scipy.io import wavfile as wav
-import operator
 import numpy as np
 from librosa import core
 from librosa.feature import tempogram
@@ -7,8 +6,22 @@ from librosa.util.exceptions import ParameterError
 import mir_eval
 import os
 from prettytable import PrettyTable
+import madmom
 
-DEBUG = False
+DEBUG = True
+
+def madMom(useMadmom, useDownBeat, f):
+    if not useDownBeat:
+        proc = madmom.features.beats.BeatTrackingProcessor(fps=100)
+        act = madmom.features.beats.RNNBeatProcessor()(f)
+        timetag = proc(act)
+    if useDownBeat:
+        proc = madmom.features.downbeats.DBNDownBeatTrackingProcessor(beats_per_bar=[3, 4], fps=100)
+        act = madmom.features.downbeats.RNNDownBeatProcessor()(f)
+        timetag = np.array(proc(act))
+        timetag = np.delete(timetag, np.s_[1::], 1).flatten()
+    return proc, act, timetag
+
 
 def getResultQ1Q3(GENRE, genres_p, genres_ALOTC):
     resultTB, overallResultTB = PrettyTable(), PrettyTable()
@@ -65,6 +78,7 @@ def read_beatfile(DB, f):
         genre = f.split('/')[2]
         file_name = f.split('/')[3].replace('wav', 'beats')
         beat_file = DB + '/key_beat/' + genre + '/' + file_name
+        # print(beat_file)
         reference_beats, _ = mir_eval.io.load_labeled_events(beat_file)
         reference_beats = mir_eval.beat.trim_beats(reference_beats)
     elif DB == 'SMC':
@@ -81,7 +95,8 @@ def read_beatfile(DB, f):
         result = [f for f in os.listdir(
             dirPath) if os.path.isfile(os.path.join(dirPath, f))]
         for i in range(len(result)):
-            if f.split('JCS/JCS_audio/')[1].split('.mp3')[0] in result[i]:
+            if f.split('JCS/JCS_audio/')[1].split('.wav')[0] in result[i]:
+                # print(result[i])
                 reference_beats, _ = mir_eval.io.load_labeled_events(
                     dirPath + '/' + result[i])
                 reference_beats = mir_eval.beat.trim_beats(reference_beats)
@@ -194,7 +209,6 @@ def tempo(y=None, sr=22050, onset_envelope=None, hop_length=512, start_bpm=120,
     if max_tempo is not None:
         max_idx = np.argmax(bpms < max_tempo)
         prior[:max_idx] = 0
-
 
     period = tg * prior[:, np.newaxis]
     best_period = np.argmax(period, axis=0)
