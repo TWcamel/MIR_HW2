@@ -39,4 +39,4 @@ JCMFILES=./JCS/JCS_audio
 ```
 
 ## Discussions of HW
-We have done the Task1-Task2. The discussion and the results was showed on [here](https://www.notion.so/twcamel/Mir_hw2-9099d1c00d844bc1af3e3e09307b1e5e). Enjoy it!
+Task1-Task2 in this HW was been done. The discussion and the results were showed on [here](https://www.notion.so/twcamel/Mir_hw2-9099d1c00d844bc1af3e3e09307b1e5e). Enjoy it!
