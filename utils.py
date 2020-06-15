@@ -8,7 +8,7 @@ import os
 from prettytable import PrettyTable
 import madmom
 
-DEBUG = True
+DEBUG = False
 
 def madMom(useMadmom, useDownBeat, f):
     if not useDownBeat:
@@ -19,7 +19,7 @@ def madMom(useMadmom, useDownBeat, f):
         proc = madmom.features.downbeats.DBNDownBeatTrackingProcessor(beats_per_bar=[3, 4], fps=100)
         act = madmom.features.downbeats.RNNDownBeatProcessor()(f)
         timetag = np.array(proc(act))
-        timetag = np.delete(timetag, np.s_[0], 1).flatten()
+        timetag = np.delete(timetag, np.s_[1::], 1).flatten()
     return proc, act, timetag
 
 
