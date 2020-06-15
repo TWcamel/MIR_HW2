@@ -19,7 +19,7 @@ def madMom(useMadmom, useDownBeat, f):
         proc = madmom.features.downbeats.DBNDownBeatTrackingProcessor(beats_per_bar=[3, 4], fps=100)
         act = madmom.features.downbeats.RNNDownBeatProcessor()(f)
         timetag = np.array(proc(act))
-        timetag = np.delete(timetag, np.s_[1::], 1).flatten()
+        timetag = np.delete(timetag, np.s_[0], 1).flatten()
     return proc, act, timetag
 
 
@@ -105,6 +105,7 @@ def read_beatfile(DB, f):
 
 
 def read_meterfile(DB, f, g_beats_len):
+    global meters
     if DB == 'JCS':
         dirPath = r"JCS/annotations"
         result = [f for f in os.listdir(
@@ -122,6 +123,7 @@ def read_meterfile(DB, f, g_beats_len):
 
 
 def read_downbeatfile(DB, f):
+    global event_times, labels
     if DB == 'JCS':
         dirPath = r"JCS/annotations"
         result = [f for f in os.listdir(
@@ -192,7 +194,6 @@ def tempo(y=None, sr=22050, onset_envelope=None, hop_length=512, start_bpm=120,
                    hop_length=hop_length,
                    win_length=win_length)
 
-    # Eventually, we want this to work for time-varying tempo
     if aggregate is not None:
         tg = aggregate(tg, axis=1, keepdims=True)
 

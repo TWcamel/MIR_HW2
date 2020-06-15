@@ -4,7 +4,7 @@ import mir_eval
 import utils
 from tqdm import tqdm
 
-DB = 'Ballroom'
+DB = 'JCS'
 if DB == 'SMC':
     FILES = glob(DB + '/SMC_MIREX_Audio//*.wav')
 elif DB == 'JCS':
@@ -45,7 +45,8 @@ if __name__ == '__main__':
                 if not useDownBeat:
                     f_measure = mir_eval.beat.f_measure(g_beats, timetag, 0.07)
                 elif useDownBeat:
-                    f_measure = mir_eval.beat.f_measure(event_times, timetag, 0.07)
+                    f_measure = mir_eval.beat.f_measure(
+                        event_times, timetag, 0.07)
                 sum_f += f_measure
                 cnt_f += 1.0
 
