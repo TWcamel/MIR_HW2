@@ -4,7 +4,7 @@ import utils
 import madmom
 
 useMadmom = True
-DB = 'Ballroom'
+DB = 'SMC'
 
 if __name__ == '__main__':
     GENRE = [g.split('/')[2] for g in glob(DB + '/wav/*')]
