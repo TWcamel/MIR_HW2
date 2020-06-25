@@ -26,12 +26,13 @@ $ sudo python3 -m pip install --user pipenv
 ```
 Once you have done the installation, run below code to install the packages that you need in this HW:
 ```
+$ pipenv shell 
 $ pipenv sync 
 ```
 ## Usages
 The source `JCM` files are `.mp3` format. The intuitive way to implement the MIR is to utilize `.wav` files. Here, we also provided the converting program: `mp3Towav.sh`. To convet from `.mp3` to `.wav`, you first need to install `ffmepg` tool.
 ```
-$ sudo apt-get install ffmepg
+$ sudo apt-get install ffmpeg
 ```
 Second, you need to modify the target file variable in the `mp3Towav.sh` file.
 ```
