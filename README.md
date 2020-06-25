@@ -22,7 +22,7 @@ Homework 2 for Music Information Retrieval
 ## Prerequisite
 In this repo, the `pipenv` python package was used to manage this project's python package. `pipenv` provides a handy way to deploy projects. To use `pipenv`, first, you need to install it.
 ```
-$ sudo apt-get install pipenv
+$ sudo python3 -m pip install --user pipenv
 ```
 Once you have done the installation, run below code to install the packages that you need in this HW:
 ```
